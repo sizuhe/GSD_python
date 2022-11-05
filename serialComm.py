@@ -17,6 +17,8 @@ class SerialComm:
 
         return packet
 
+
+
     # Printing available ports
     def Ports():
         portslist = []

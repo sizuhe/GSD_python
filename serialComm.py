@@ -1,24 +1,25 @@
-import serial
 import serial.tools.list_ports
 
 
-class SerialComm:
-    # Reading data from serial port
-    def dataPacket_Read():
-        # serialInst = serial.Serial(portName, baudrate)
-        serialInst = serial.Serial()
-        serialInst.baudrate = 9600
-        serialInst.port = "COM4"
-        serialInst.open()
 
-        packet = serialInst.readline()
+class SerialComm:
+    def __init__(self):
+        self.serialInst = serial.Serial()
+        self.serialInst.baudrate = 9600
+        self.serialInst.port = "COM4"       #? Port might need to be changed
+        self.serialInst.open()
+
+    # Reading data from serial port
+    # arduino print speed 500 ms
+    def dataPacket_Read(self):
+        # serialInst = serial.Serial(portName, baudrate)
+        packet = self.serialInst.readline()
         packet = packet.decode("utf")
         packet = packet.split(',')
 
         return packet
 
-
-
+    #! ----- TO DO -----
     # Printing available ports
     def Ports():
         portslist = []

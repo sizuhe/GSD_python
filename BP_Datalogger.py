@@ -11,6 +11,8 @@ from graphs.graphName2 import graphName2
 from graphs.graphName3 import graphName3
 from graphs.graphName4 import graphName4
 
+
+
 #? Communication port and filename might need to be changed
 
 # Create main window
@@ -75,10 +77,8 @@ Pag1_TimeLCD.setProperty("value", 0)
 ### Push buttons
 Pag1_ButtonStart = QtWidgets.QPushButton(groupTabWidget_Pag1)
 Pag1_ButtonStart.setText("Iniciar")
-Pag1_ButtonStart.setToolTip("Iniciar guardado de datos")
 Pag1_ButtonStop = QtWidgets.QPushButton(groupTabWidget_Pag1)
 Pag1_ButtonStop.setText("Detener")
-Pag1_ButtonStop.setToolTip("Detener guardado de datos")
 
 spacerItem = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Fixed)
 
@@ -207,27 +207,22 @@ gridTabWidget_Pag2.addWidget(Pag2_MotorweightText_edit, 6, 1, 1, 1)
 #* ----------------------------------------
 
 # GRAPHS
-graphsView = pg.GraphicsView()
+graphsView1 = pg.GraphicsView()
 graphsView2 = pg.GraphicsView()
 graphsView3 = pg.GraphicsView()
 graphsView4 = pg.GraphicsView()
 
-graphsView.addItem(graphname1_ins)
-graphsView2.addItem(graphname2_ins)
-graphsView3.addItem(graphname3_ins)
-graphsView4.addItem(graphname4_ins)
-
-graphsView.setCentralItem(graphname1_ins)
+graphsView1.setCentralItem(graphname1_ins)
 graphsView2.setCentralItem(graphname2_ins)
 graphsView3.setCentralItem(graphname3_ins)
 graphsView4.setCentralItem(graphname4_ins)
 
-graphsView.setStatusTip("Descripción grafica 1")
+graphsView1.setStatusTip("Descripción grafica 1")
 graphsView2.setStatusTip("Descripción grafica 2")
 graphsView3.setStatusTip("Descripción grafica 3")
 graphsView4.setStatusTip("Descripción grafica 4")
 
-gridInterface.addWidget(graphsView, 0, 1, 1, 1)
+gridInterface.addWidget(graphsView1, 0, 1, 1, 1)
 gridInterface.addWidget(graphsView2, 0, 2, 1, 1)
 gridInterface.addWidget(graphsView3, 1, 1, 1, 1)
 gridInterface.addWidget(graphsView4, 1, 2, 1, 1)
@@ -288,11 +283,11 @@ Tab2_Action_HideGraph4.setShortcut("Ctrl+4")
 
 ## Adding objects to 'Archivo' menu
 menuBar_Tab1.addAction(Tab1_Ports.menuAction())
-menuBar_Tab1.setEnabled(False)     #! ----- TO DO -----
+Tab1_Ports.setEnabled(False)     #! ----- TO DO -----
 menuBar_Tab1.addSeparator()
 menuBar_Tab1.addAction(Tab1_Export.menuAction())
-Tab1_Export.addAction(Tab1_Action_OpenRocket)
 Tab1_Export.setEnabled(False)     #! ----- TO DO -----
+Tab1_Export.addAction(Tab1_Action_OpenRocket)
 menuBar_Tab1.addSeparator()
 menuBar_Tab1.addAction(Tab1_Action_Close)
 
@@ -311,7 +306,7 @@ menuBar.addAction(menuBar_Tab2.menuAction())
 # Menu bar actions
 Tab1_Action_Close.triggered.connect(mainWindow.close)
 Tab2_Action_HideTabWidget.triggered.connect(groupTabWidget.setVisible)
-Tab2_Action_HideGraph1.triggered.connect(graphsView.setVisible)
+Tab2_Action_HideGraph1.triggered.connect(graphsView1.setVisible)
 Tab2_Action_HideGraph2.triggered.connect(graphsView2.setVisible)
 Tab2_Action_HideGraph3.triggered.connect(graphsView3.setVisible)
 Tab2_Action_HideGraph4.triggered.connect(graphsView4.setVisible)
@@ -335,7 +330,7 @@ def window():
 
         # Data saving
         #? Change name to desired filename
-        datasave_ins.Save(dataPacket[0], dataPacket[1], "name")
+        datasave_ins.Save(dataPacket[0], dataPacket[3], "name")
 
         # LCD time updater
         if (dataSignal%2) != 0:

@@ -7,6 +7,8 @@ class graphName4(pg.PlotItem):
     def __init__(self):
         super().__init__()
         # Zero values to replace with real data
+        self.hideAxis("bottom")
+        self.setLabel("left"," ")
         self.plotGraph = self.plot()
         self.dataGraph = np.linspace(0, 0, 15)
 

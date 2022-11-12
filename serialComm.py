@@ -10,7 +10,7 @@ class SerialComm:
         self.serialInst.open()
 
     # Reading data from serial port
-    # arduino print speed 500 ms
+    #* arduino print speed 500 ms
     def dataPacket_Read(self):
         # serialInst = serial.Serial(portName, baudrate)
         packet = self.serialInst.readline()

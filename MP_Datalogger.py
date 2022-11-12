@@ -11,7 +11,14 @@ from graphs.graphName2 import graphName2
 from graphs.graphName3 import graphName3
 from graphs.graphName4 import graphName4
 
-
+# TODO
+# - Guardado de multiples archivos
+# - Exportar a reporte / OpenRocket
+# OPTIMIZAR APP
+# - Agregar funcionalidad para mostrar puerto serial disponibles
+# - Agregar iconos e imagenes
+# Arduino enviar datos a tiempo real y diferenciarlos desde python
+# Fullscreen mode
 
 #? Communication port and filename might need to be changed
 
@@ -19,7 +26,7 @@ from graphs.graphName4 import graphName4
 app = QApplication(sys.argv)
 mainWindow = QMainWindow()
 mainWindow.resize(767,544)
-mainWindow.setWindowTitle("BP Datalogger")
+mainWindow.setWindowTitle("Multipurpose Datalogger")
 
 # Instance of each graph
 graphname1_ins = graphName1()
@@ -49,7 +56,7 @@ groupTabWidget.setFixedSize(QtCore.QSize(270, 270))
 gridInterface.addWidget(groupTabWidget, 0, 0, 1, 1, QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
 
 # --------------------
-## PAG 1 - 'Toma de datos'
+## PAGE 1 - 'Toma de datos'
 groupTabWidget_Pag1 = QtWidgets.QWidget()
 gridTabWidget_Pag1 = QtWidgets.QGridLayout(groupTabWidget_Pag1)
 groupTabWidget.addTab(groupTabWidget_Pag1, "Toma de datos")
@@ -128,7 +135,7 @@ Pag1_ButtonStop.clicked.connect(Light_OFF)
 Pag1_ButtonStop.clicked.connect(dataStop)
 
 # --------------------
-## PAG 2 - 'Detalles'
+## PAGE 2 - 'Detalles'
 groupTabWidget_Pag2 = QtWidgets.QWidget()
 groupTabWidget_Pag2.setEnabled(False)       #! ----- TO DO -----
 gridTabWidget_Pag2 = QtWidgets.QGridLayout(groupTabWidget_Pag2)

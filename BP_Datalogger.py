@@ -20,18 +20,17 @@ app = QApplication(sys.argv)
 mainWindow = QMainWindow()
 mainWindow.resize(767,544)
 mainWindow.setWindowTitle("BP Datalogger")
-# setIconSize(QtCore.QSize(24, 24))
 
-# Instace of each graph
+# Instance of each graph
 graphname1_ins = graphName1()
 graphname2_ins = graphName2()
 graphname3_ins = graphName3()
 graphname4_ins = graphName4()
 
-# Data saving
+# Data save instance
 datasave_ins = dataSave()
 
-# Serial communication
+# Serial communication instance
 serialcomm_ins = SerialComm()
 
 
@@ -95,7 +94,7 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("Versión 1.0\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 5\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -131,6 +130,7 @@ Pag1_ButtonStop.clicked.connect(dataStop)
 # --------------------
 ## PAG 2 - 'Detalles'
 groupTabWidget_Pag2 = QtWidgets.QWidget()
+groupTabWidget_Pag2.setEnabled(False)       #! ----- TO DO -----
 gridTabWidget_Pag2 = QtWidgets.QGridLayout(groupTabWidget_Pag2)
 groupTabWidget.addTab(groupTabWidget_Pag2, "Detalles")
 groupTabWidget.setStatusTip("Detalles de la prueba")
@@ -187,7 +187,7 @@ Pag2_HeightText_edit.setMaxLength(5)
 Pag2_PropweightText_edit.setMaxLength(5)
 Pag2_MotorweightText_edit.setMaxLength(5)
 
-### Adding widgets to tab widget page 1 - 'Detalles'
+### Adding widgets to tab widget page 2 - 'Detalles'
 gridTabWidget_Pag2.addWidget(Pag2_NameText, 0, 0, 1, 1)
 gridTabWidget_Pag2.addWidget(Pag2_ManufacturerText, 1, 0, 1, 1)
 gridTabWidget_Pag2.addWidget(Pag2_DateText, 2, 0, 1, 1)

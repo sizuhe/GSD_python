@@ -11,15 +11,6 @@ from graphs.graphName2 import graphName2
 from graphs.graphName3 import graphName3
 from graphs.graphName4 import graphName4
 
-# TODO
-# - Guardado de multiples archivos
-# - Exportar a reporte / OpenRocket
-# OPTIMIZAR APP
-# - Agregar funcionalidad para mostrar puerto serial disponibles
-# - Agregar iconos e imagenes
-# Arduino enviar datos a tiempo real y diferenciarlos desde python
-# Fullscreen mode
-
 #? Communication port and filename might need to be changed
 
 # Create main window

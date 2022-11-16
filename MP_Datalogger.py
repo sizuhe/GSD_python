@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
 import sys
+import time
 
 # Scripts
 from serialComm import SerialComm
@@ -11,7 +12,7 @@ from graphs.graphName2 import graphName2
 from graphs.graphName3 import graphName3
 from graphs.graphName4 import graphName4
 
-#? Communication port and filename might need to be changed
+
 
 # Create main window
 app = QApplication(sys.argv)
@@ -86,7 +87,7 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("V1.0 beta 5\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 6\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -308,12 +309,14 @@ menuBar_Tab2.addAction(Tab2_Action_HideGraph4)
 #* ========================================
 
 dataSignal = 0
+testTime = 0
+testStatus = serialcomm_ins.testStatus()
 
 def window():
     def dataUpdater():
-        global dataSignal
+        global dataSignal, testTime
         dataSignal += 1
-
+            
         # Real time plotting
         #* arduino print speed 500 ms
         dataPacket = serialcomm_ins.dataPacket_Read()
@@ -322,17 +325,29 @@ def window():
         graphname3_ins.update(dataPacket[3])
         # graphname4_ins.update(dataPacket[4])
 
-        # Data saving
-        #? Change name to desired filename
-        datasave_ins.Save(dataPacket[0], dataPacket[3], "name")
+        # Data saving filename by time
+        fileName = "save" + time.strftime('_%H-%M-%S')
+
+        # Data saving for test and real data
+        if testStatus == True:
+            datasave_ins.Save(testTime, dataPacket[3], fileName)
+            testTime += 0.5
+        else:
+            datasave_ins.Save(dataPacket[0], dataPacket[3], fileName)
 
         # LCD time updater
         if (dataSignal%2) != 0:
             datasave_ins.LCD(Pag1_TimeLCD)
-    
+
+    # Update time
+    if testStatus == True:
+        updateTime = 500
+    else:
+        updateTime = 0
+
     # Real time data updater
     dataUpdate = pg.QtCore.QTimer(timeout = dataUpdater)
-    dataUpdate.start()
+    dataUpdate.start(updateTime)
 
     mainWindow.show()
     sys.exit(app.exec())

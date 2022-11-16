@@ -3,10 +3,15 @@ import serial.tools.list_ports
 
 
 class SerialComm:
-    def __init__(self):
+    def __init__(self):    
         self.serialInst = serial.Serial()
         self.serialInst.baudrate = 9600
-        self.serialInst.port = "COM4"       #? Port might need to be changed
+
+        for port in serial.tools.list_ports.comports():
+            if ('CH340' or 'Arduino') in port.description:
+                self.serialInst.port = port.name
+
+        # self.serialInst.port = "COM4"       #? Port might need to be changed
         self.serialInst.open()
 
     # Reading data from serial port
@@ -18,18 +23,3 @@ class SerialComm:
         packet = packet.split(',')
 
         return packet
-
-    #! ----- TO DO -----
-    # Printing available ports
-    def Ports():
-        portslist = []
-
-        for port in serial.tools.list_ports.comports():
-            portslist.append(port.name)
-
-            # print(dir(port))
-            # portslist.sort()
-            # return port.name
-            # print(port.description)
-
-        return portslist

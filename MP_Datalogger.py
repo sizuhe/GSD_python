@@ -53,16 +53,10 @@ gridTabWidget_Pag1 = QtWidgets.QGridLayout(groupTabWidget_Pag1)
 groupTabWidget.addTab(groupTabWidget_Pag1, "Toma de datos")
 groupTabWidget.setStatusTip("Menu para iniciar/detener toma de datos")
 
-### Descriptive text
-Pag1_MainText = QtWidgets.QLabel(groupTabWidget_Pag1)
-Pag1_MainText.setAlignment(QtCore.Qt.AlignCenter)
-Pag1_MainText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag1_MainText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag1_MainText.setWordWrap(True)
-Pag1_MainText.setText("Texto descriptivo de toma de datos - CAMBIAR")
-
 ### Elapsed time
 Pag1_TimeText = QtWidgets.QLabel(groupTabWidget_Pag1)
+Pag1_TimeText.setFont(QtGui.QFont("default",12))
+Pag1_TimeText.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_TimeText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_TimeText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_TimeText.setText("Tiempo [s]")
@@ -99,14 +93,13 @@ Pag1_CreditsBox.setText("V1.0 beta 5\n\n"
 "Universidad de Antioquia")
 
 ### Adding widgets to tab widget page 1 - 'Toma de datos'
-gridTabWidget_Pag1.addWidget(Pag1_MainText, 0, 0, 1, 2)
-gridTabWidget_Pag1.addWidget(Pag1_TimeText, 1, 0, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_TimeLCD, 1, 1, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_ButtonStart, 2, 0, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_ButtonStop, 2, 1, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_Light, 3, 0, 1, 2)
-gridTabWidget_Pag1.addItem(spacerItem, 4, 0, 1, 2)
-gridTabWidget_Pag1.addWidget(Pag1_CreditsBox, 5, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_TimeText, 0, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_TimeLCD, 0, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_ButtonStart, 1, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_ButtonStop, 1, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_Light, 2, 0, 1, 2)
+gridTabWidget_Pag1.addItem(spacerItem, 3, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_CreditsBox, 4, 0, 1, 2)
 
 # Green light ON-OFF functions
 def Light_ON():
@@ -240,19 +233,37 @@ menuBar_Tab1.setTitle("Archivo")
 menuBar_Tab2 = QtWidgets.QMenu(menuBar)
 menuBar_Tab2.setTitle("Ver")
 
-### 'Archivo' submenus
-Tab1_Ports = QtWidgets.QMenu(menuBar_Tab1)
-Tab1_Ports.setTitle("Puerto serial")
+## Adding 'Archivo' and 'Ver' submenus to menuBar
+menuBar.addAction(menuBar_Tab1.menuAction())
+menuBar.addAction(menuBar_Tab2.menuAction())
+
+# --------------------
+## Submenu - 'Archivo'
+### Submenus
 Tab1_Export = QtWidgets.QMenu(menuBar_Tab1)
 Tab1_Export.setTitle("Exportar")
 
-### 'Archivo' menu actions
+### Submenus actions
+Tab1_Action_Ports = QtWidgets.QAction(mainWindow)
 Tab1_Action_OpenRocket = QtWidgets.QAction(mainWindow)
 Tab1_Action_OpenRocket.setText("OpenRocket")
 Tab1_Action_Close = QtWidgets.QAction(mainWindow)
 Tab1_Action_Close.setText("Salir")
 
-### 'Ver' menu actions
+### Actions connections
+Tab1_Action_Close.triggered.connect(mainWindow.close)
+
+### Adding actions to menuBar
+menuBar_Tab1.addSeparator()
+menuBar_Tab1.addAction(Tab1_Export.menuAction())
+Tab1_Export.setEnabled(False)     #! ----- TO DO -----
+Tab1_Export.addAction(Tab1_Action_OpenRocket)
+menuBar_Tab1.addSeparator()
+menuBar_Tab1.addAction(Tab1_Action_Close)
+
+# --------------------
+## Submenu - 'Ver'
+### Actions
 Tab2_Action_HideTabWidget = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideTabWidget.setCheckable(True)
 Tab2_Action_HideTabWidget.setChecked(True)
@@ -279,35 +290,20 @@ Tab2_Action_HideGraph4.setChecked(True)
 Tab2_Action_HideGraph4.setText("Grafica 4")
 Tab2_Action_HideGraph4.setShortcut("Ctrl+4")
 
-## Adding objects to 'Archivo' menu
-menuBar_Tab1.addAction(Tab1_Ports.menuAction())
-Tab1_Ports.setEnabled(False)     #! ----- TO DO -----
-menuBar_Tab1.addSeparator()
-menuBar_Tab1.addAction(Tab1_Export.menuAction())
-Tab1_Export.setEnabled(False)     #! ----- TO DO -----
-Tab1_Export.addAction(Tab1_Action_OpenRocket)
-menuBar_Tab1.addSeparator()
-menuBar_Tab1.addAction(Tab1_Action_Close)
+### Actions connections
+Tab2_Action_HideTabWidget.triggered.connect(groupTabWidget.setVisible)
+Tab2_Action_HideGraph1.triggered.connect(graphsView1.setVisible)
+Tab2_Action_HideGraph2.triggered.connect(graphsView2.setVisible)
+Tab2_Action_HideGraph3.triggered.connect(graphsView3.setVisible)
+Tab2_Action_HideGraph4.triggered.connect(graphsView4.setVisible)
 
-## Adding objects to 'Ver' menu
+### Adding actions to menuBar
 menuBar_Tab2.addAction(Tab2_Action_HideTabWidget)
 menuBar_Tab2.addSeparator()
 menuBar_Tab2.addAction(Tab2_Action_HideGraph1)
 menuBar_Tab2.addAction(Tab2_Action_HideGraph2)
 menuBar_Tab2.addAction(Tab2_Action_HideGraph3)
 menuBar_Tab2.addAction(Tab2_Action_HideGraph4)
-
-# Adding 'Archivo' and 'Ver' menus to general Menu Bar
-menuBar.addAction(menuBar_Tab1.menuAction())
-menuBar.addAction(menuBar_Tab2.menuAction())
-
-# Menu bar actions
-Tab1_Action_Close.triggered.connect(mainWindow.close)
-Tab2_Action_HideTabWidget.triggered.connect(groupTabWidget.setVisible)
-Tab2_Action_HideGraph1.triggered.connect(graphsView1.setVisible)
-Tab2_Action_HideGraph2.triggered.connect(graphsView2.setVisible)
-Tab2_Action_HideGraph3.triggered.connect(graphsView3.setVisible)
-Tab2_Action_HideGraph4.triggered.connect(graphsView4.setVisible)
 
 #* ========================================
 

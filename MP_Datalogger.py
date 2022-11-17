@@ -79,7 +79,7 @@ Pag1_Light = QtWidgets.QProgressBar(groupTabWidget_Pag1)
 Pag1_Light.setProperty("value", 0)
 Pag1_Light.setTextVisible(False)
 
-### Authors/credits box
+###! Authors/credits box
 Pag1_CreditsBox = QtWidgets.QLabel(groupTabWidget_Pag1)
 Pag1_CreditsBox.setFrameShape(QtWidgets.QFrame.Box)
 Pag1_CreditsBox.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -87,7 +87,7 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("V1.0 beta 6\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 7\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -330,7 +330,7 @@ def window():
 
         # Data saving for test and real data
         if testStatus == True:
-            datasave_ins.Save(testTime, dataPacket[3], fileName)
+            datasave_ins.Save(testTime, dataPacket[1], fileName)
             testTime += 0.5
         else:
             datasave_ins.Save(dataPacket[0], dataPacket[3], fileName)
@@ -338,6 +338,7 @@ def window():
         # LCD time updater
         if (dataSignal%2) != 0:
             datasave_ins.LCD(Pag1_TimeLCD)
+
 
     # Update time
     if testStatus == True:

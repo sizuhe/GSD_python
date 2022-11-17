@@ -11,13 +11,16 @@ class SerialComm:
         arduinoSignal = False
 
         # Automatic arduino detection
-        for port in serial.tools.list_ports.comports():
-            if ('CH340' or 'Arduino') in port.description:
-                arduinoSignal = True
-                self.serialInst.port = port.name
-                self.serialInst.open()
-            elif arduinoSignal == False:
-                self.testPort = True
+        if len(serial.tools.list_ports.comports()) != 0:
+            for port in serial.tools.list_ports.comports():
+                if ('CH340' or 'Arduino') in port.description:
+                    arduinoSignal = True
+                    self.serialInst.port = port.name
+                    self.serialInst.open()
+                elif arduinoSignal == False:
+                    self.testPort = True
+        else:
+            self.testPort = True
 
         # Manual mode
         # self.serialInst.port = "COM4"       
@@ -25,22 +28,20 @@ class SerialComm:
 
     # Reading data
     def dataPacket_Read(self):
-        # Test mode
-        if self.testPort == True:
-            packet = [0, random.random(), random.random(), random.random()]
-            return packet
-
         # Reading data from from serial port
         #* arduino print speed 500 ms
-        else:
+        if self.testPort == False:
             try:
-                # serialInst = serial.Serial(portName, baudrate)
                 packet = self.serialInst.readline()
-                packet = packet.decode("utf")
+                packet = packet.decode("utf-8")
                 packet = packet.split(',')
                 return packet
             except:
                 print("Error en la decodificación de datos")
+        # Test mode
+        else:
+            packet = [0, random.random(), random.random(), random.random(), random.random()]
+            return packet
 
     def testStatus(self):
         return self.testPort

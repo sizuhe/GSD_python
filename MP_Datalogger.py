@@ -44,7 +44,8 @@ gridInterface = QtWidgets.QGridLayout(Interface)
 
 # TAB WIDGET
 groupTabWidget = QtWidgets.QTabWidget(Interface)
-groupTabWidget.setFixedSize(QtCore.QSize(270, 270))
+groupTabWidget.setMinimumSize(QtCore.QSize(270, 270))
+groupTabWidget.setMaximumSize(QtCore.QSize(270, 300))
 gridInterface.addWidget(groupTabWidget, 0, 0, 1, 1, QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
 
 # --------------------
@@ -53,6 +54,25 @@ groupTabWidget_Pag1 = QtWidgets.QWidget()
 gridTabWidget_Pag1 = QtWidgets.QGridLayout(groupTabWidget_Pag1)
 groupTabWidget.addTab(groupTabWidget_Pag1, "Toma de datos")
 groupTabWidget.setStatusTip("Menu para iniciar/detener toma de datos")
+
+### Test mode status
+Pag1_TestmodeON = QtWidgets.QLabel(groupTabWidget_Pag1)
+Pag1_TestmodeON.setFrameShape(QtWidgets.QFrame.Box)
+Pag1_TestmodeON.setFrameShadow(QtWidgets.QFrame.Sunken)
+Pag1_TestmodeON.setAlignment(QtCore.Qt.AlignCenter)
+Pag1_TestmodeON.setText("Testmode ON")
+Pag1_TestmodeOFF = QtWidgets.QLabel(groupTabWidget_Pag1)
+Pag1_TestmodeOFF.setFrameShape(QtWidgets.QFrame.Box)
+Pag1_TestmodeOFF.setFrameShadow(QtWidgets.QFrame.Sunken)
+Pag1_TestmodeOFF.setAlignment(QtCore.Qt.AlignCenter)
+Pag1_TestmodeOFF.setText("Testmode OFF")
+testMode_Boldtext = QtGui.QFont()
+testMode_Boldtext.setBold(True)
+
+# Horizontal line
+Pag1_horizontalLine = QtWidgets.QFrame(groupTabWidget_Pag1)
+Pag1_horizontalLine.setFrameShape(QtWidgets.QFrame.HLine)
+Pag1_horizontalLine.setFrameShadow(QtWidgets.QFrame.Sunken)
 
 ### Elapsed time
 Pag1_TimeText = QtWidgets.QLabel(groupTabWidget_Pag1)
@@ -72,12 +92,13 @@ Pag1_ButtonStart.setText("Iniciar")
 Pag1_ButtonStop = QtWidgets.QPushButton(groupTabWidget_Pag1)
 Pag1_ButtonStop.setText("Detener")
 
-spacerItem = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Fixed)
-
 ### Light
 Pag1_Light = QtWidgets.QProgressBar(groupTabWidget_Pag1)
 Pag1_Light.setProperty("value", 0)
 Pag1_Light.setTextVisible(False)
+
+### Spacer
+Pag1_spacerItem = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Fixed)
 
 ###! Authors/credits box
 Pag1_CreditsBox = QtWidgets.QLabel(groupTabWidget_Pag1)
@@ -87,29 +108,39 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("V1.0 beta 7\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 8\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
 "Universidad de Antioquia")
 
 ### Adding widgets to tab widget page 1 - 'Toma de datos'
-gridTabWidget_Pag1.addWidget(Pag1_TimeText, 0, 0, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_TimeLCD, 0, 1, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_ButtonStart, 1, 0, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_ButtonStop, 1, 1, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_Light, 2, 0, 1, 2)
-gridTabWidget_Pag1.addItem(spacerItem, 3, 0, 1, 2)
-gridTabWidget_Pag1.addWidget(Pag1_CreditsBox, 4, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_TestmodeON, 0, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_TestmodeOFF, 0, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_horizontalLine, 1, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_TimeText, 2, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_TimeLCD, 2, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_ButtonStart, 3, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_ButtonStop, 3, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_Light, 4, 0, 1, 2)
+gridTabWidget_Pag1.addItem(Pag1_spacerItem, 5, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_CreditsBox, 6, 0, 1, 2)
 
-# Green light ON-OFF functions
+# Datasave light ON-OFF functions
 def Light_ON():
     Pag1_Light.setProperty("value", 100)
-
 def Light_OFF():
     Pag1_Light.setProperty("value", 0)
 
-# Stop data saving
+# Test mode light ON-OFF
+if serialcomm_ins.testStatus() == True:
+    Pag1_TestmodeON.setStyleSheet("background-color: rgb(46,180,87)")
+    Pag1_TestmodeON.setFont(testMode_Boldtext)
+else:
+    Pag1_TestmodeOFF.setStyleSheet("background-color: rgb(220,40,57)")
+    Pag1_TestmodeOFF.setFont(testMode_Boldtext)
+
+# Data saving functions
 def dataStop():
     return datasave_ins.Stop(Pag1_TimeLCD)
 
@@ -142,7 +173,7 @@ Pag2_DateText.setText("Fecha [DD/MM/AAAA]")
 Pag2_DiameterText = QtWidgets.QLabel(groupTabWidget_Pag2)
 Pag2_DiameterText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag2_DiameterText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_DiameterText.setText("Diametro [mm]")
+Pag2_DiameterText.setText("Diámetro [mm]")
 Pag2_HeightText = QtWidgets.QLabel(groupTabWidget_Pag2)
 Pag2_HeightText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag2_HeightText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
@@ -164,11 +195,11 @@ Pag2_ManufacturerText_edit.setStatusTip("Proveedor del motor")
 Pag2_DateText_edit = QtWidgets.QDateEdit(groupTabWidget_Pag2)
 Pag2_DateText_edit.setStatusTip("Fecha de la prueba")
 Pag2_DiameterText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_DiameterText_edit.setStatusTip("Diametro del motor")
+Pag2_DiameterText_edit.setStatusTip("Diámetro del motor")
 Pag2_HeightText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
 Pag2_HeightText_edit.setStatusTip("Altura del motor")
 Pag2_PropweightText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_PropweightText_edit.setStatusTip("Peso del propelente del motor (PesoMotor_Lleno - PesoMotor_Vacio)")
+Pag2_PropweightText_edit.setStatusTip("Peso del propelente del motor (PesoMotor_Lleno - PesoMotor_Vacío)")
 Pag2_MotorweightText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
 Pag2_MotorweightText_edit.setStatusTip("Peso del motor con propelente")
 
@@ -199,6 +230,8 @@ gridTabWidget_Pag2.addWidget(Pag2_MotorweightText_edit, 6, 1, 1, 1)
 #* ----------------------------------------
 
 # GRAPHS
+gridGraphs = QtWidgets.QGridLayout()
+
 graphsView1 = pg.GraphicsView()
 graphsView2 = pg.GraphicsView()
 graphsView3 = pg.GraphicsView()
@@ -209,15 +242,17 @@ graphsView2.setCentralItem(graphname2_ins)
 graphsView3.setCentralItem(graphname3_ins)
 graphsView4.setCentralItem(graphname4_ins)
 
-graphsView1.setStatusTip("Descripción grafica 1")
-graphsView2.setStatusTip("Descripción grafica 2")
-graphsView3.setStatusTip("Descripción grafica 3")
-graphsView4.setStatusTip("Descripción grafica 4")
+graphsView1.setStatusTip("Descripción gráfica 1")
+graphsView2.setStatusTip("Descripción gráfica 2")
+graphsView3.setStatusTip("Descripción gráfica 3")
+graphsView4.setStatusTip("Descripción gráfica 4")
 
-gridInterface.addWidget(graphsView1, 0, 1, 1, 1)
-gridInterface.addWidget(graphsView2, 0, 2, 1, 1)
-gridInterface.addWidget(graphsView3, 1, 1, 1, 1)
-gridInterface.addWidget(graphsView4, 1, 2, 1, 1)
+gridGraphs.addWidget(graphsView1, 0, 1, 1, 1)
+gridGraphs.addWidget(graphsView2, 0, 2, 1, 1)
+gridGraphs.addWidget(graphsView3, 1, 1, 1, 1)
+gridGraphs.addWidget(graphsView4, 1, 2, 1, 1)
+
+gridInterface.addLayout(gridGraphs, 0,1,1,1)
 
 #* ----------------------------------------
 
@@ -273,22 +308,22 @@ Tab2_Action_HideTabWidget.setShortcut("Ctrl+D")
 Tab2_Action_HideGraph1 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph1.setCheckable(True)
 Tab2_Action_HideGraph1.setChecked(True)
-Tab2_Action_HideGraph1.setText("Grafica 1")
+Tab2_Action_HideGraph1.setText("Gráfica 1")
 Tab2_Action_HideGraph1.setShortcut("Ctrl+1")
 Tab2_Action_HideGraph2 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph2.setCheckable(True)
 Tab2_Action_HideGraph2.setChecked(True)
-Tab2_Action_HideGraph2.setText("Grafica 2")
+Tab2_Action_HideGraph2.setText("Gráfica 2")
 Tab2_Action_HideGraph2.setShortcut("Ctrl+2")
 Tab2_Action_HideGraph3 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph3.setCheckable(True)
 Tab2_Action_HideGraph3.setChecked(True)
-Tab2_Action_HideGraph3.setText("Grafica 3")
+Tab2_Action_HideGraph3.setText("Gráfica 3")
 Tab2_Action_HideGraph3.setShortcut("Ctrl+3")
 Tab2_Action_HideGraph4 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph4.setCheckable(True)
 Tab2_Action_HideGraph4.setChecked(True)
-Tab2_Action_HideGraph4.setText("Grafica 4")
+Tab2_Action_HideGraph4.setText("Gráfica 4")
 Tab2_Action_HideGraph4.setShortcut("Ctrl+4")
 
 ### Actions connections
@@ -308,47 +343,45 @@ menuBar_Tab2.addAction(Tab2_Action_HideGraph4)
 
 #* ========================================
 
-dataSignal = 0
-testTime = 0
-testStatus = serialcomm_ins.testStatus()
+# Time elapsed
+counterGraph_time = 0
+saveTime = 0
 
 def window():
     def dataUpdater():
-        global dataSignal, testTime
-        dataSignal += 1
-            
-        # Real time plotting
-        #* arduino print speed 500 ms
-        dataPacket = serialcomm_ins.dataPacket_Read()
-        graphname1_ins.update(dataPacket[1])
-        graphname2_ins.update(dataPacket[2])
-        graphname3_ins.update(dataPacket[3])
-        # graphname4_ins.update(dataPacket[4])
+        global counterGraph_time, saveTime
 
-        # Data saving filename by time
-        fileName = "save" + time.strftime('_%H-%M-%S')
+        # Graph updating
+        try:
+            dataPacket = serialcomm_ins.dataPacket_Read()
 
-        # Data saving for test and real data
-        if testStatus == True:
-            datasave_ins.Save(testTime, dataPacket[1], fileName)
-            testTime += 0.5
-        else:
-            datasave_ins.Save(dataPacket[0], dataPacket[3], fileName)
+            # Updating every 0.5 s
+            if (time.monotonic() - counterGraph_time) >= 0.5:
+                counterGraph_time = time.monotonic()
 
-        # LCD time updater
-        if (dataSignal%2) != 0:
-            datasave_ins.LCD(Pag1_TimeLCD)
+                graphname1_ins.update(dataPacket[0])
+                graphname2_ins.update(dataPacket[1])
+                graphname3_ins.update(dataPacket[2])
+                # graphname4_ins.update(dataPacket[3])
+                
+                # Data saving on file
+                try:
+                    datasave_ins.Save(saveTime, dataPacket[0])
+                except:
+                    print("Error 021 - Guardado de datos")
 
+                # LCD time updater
+                saveTime += 0.5
+                if ((saveTime*2)%2) == 0:
+                    datasave_ins.LCD(Pag1_TimeLCD)
 
-    # Update time
-    if testStatus == True:
-        updateTime = 500
-    else:
-        updateTime = 0
+        except:
+            print("Error 012 - Actualización de datos")
+
 
     # Real time data updater
     dataUpdate = pg.QtCore.QTimer(timeout = dataUpdater)
-    dataUpdate.start(updateTime)
+    dataUpdate.start(0)
 
     mainWindow.show()
     sys.exit(app.exec())

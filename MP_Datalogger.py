@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
-import sys
 import time
+import ctypes
+import sys
 
-# Scripts
+# Modules
 from serialComm import SerialComm
 from dataSave import dataSave
 from graphs.graphName1 import graphName1
@@ -14,10 +15,17 @@ from graphs.graphName4 import graphName4
 
 
 
+#? To be changed:
+# Statustip and titles for graphs
+
 # Create main window
 app = QApplication(sys.argv)
 mainWindow = QMainWindow()
 mainWindow.resize(767,544)
+
+# Details of app
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('icons')
+mainWindow.setWindowIcon(QtGui.QIcon('icons/DeltaV.png'))
 mainWindow.setWindowTitle("Multipurpose Datalogger")
 
 # Instance of each graph
@@ -108,7 +116,7 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("V1.0 beta 8\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 9\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"

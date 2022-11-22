@@ -5,11 +5,12 @@ import os
 
 
 class dataSave:
-    def __init__(self):
+    def __init__(self, graphcounter):
+        self.graphcounter = graphcounter
         self.signalData = False
         self.time = 0
-        self.dataList = []
         self.timeList = []
+        self.dataLists = [[] for _ in range(self.graphcounter)]
 
         # Creating folder 'saves'
         filePath = str(os.path.abspath(__file__))
@@ -23,18 +24,18 @@ class dataSave:
         if self.signalData == True:
             self.time += 1
             lcdWidget.setProperty("value", self.time)
-        else:
-            pass
 
     # Saving data to lists
-    def Save(self, timePacket, dataPacket):
+    def Save(self, timePacket, *dataPackets):
         if self.signalData == True:
-            self.dataList.append(float(dataPacket))
             self.timeList.append(float(timePacket))
             self.refTime = self.timeList[0]
-            self.filename = "save" + time.strftime('_%H-%M-%S')
+
+            # Saving data on respective list
+            for pos,packet in enumerate(dataPackets):
+                self.dataLists[pos].append(float(packet))
         else:
-            self.dataList = []
+            self.dataLists = [[] for _ in range(self.graphcounter)]
             self.timeList = []
 
     def Stop(self, lcdWidget):
@@ -42,19 +43,21 @@ class dataSave:
         self.time = 0
         lcdWidget.setProperty("value", 0)
 
-        # Time list starts at 0
+        # Data processing for each packet
         if len(self.timeList) > 0:
-            self.refTime = self.timeList[0]
-            for pos,value in enumerate(self.timeList):
-                self.timeList[pos] = value - self.refTime
-                # self.timeList[pos] = round(self.timeList[pos], 2)
+            for pos0 in range(self.graphcounter):
+                # Time data organization
+                self.refTime = self.timeList[0]
+                for pos1,value in enumerate(self.timeList):
+                    self.timeList[pos1] = value - self.refTime
 
-            # Name differentiation
-            dataDir = "saves/" + self.filename + ".csv"
+                # Name differentiation
+                dataDir = "saves/" + time.strftime('%H-%M-%S_') + "Graph" + str(pos0+1) + ".csv"
 
-            # Saving data to a CSV file
-            dataDF = pd.DataFrame({"Time":self.timeList, "Data values":self.dataList})
-            dataDF.to_csv(dataDir, header=False, index=False)
+                # Saving data to various CSV files
+                actualList = self.dataLists[pos0]
+                dataDF = pd.DataFrame({"Time":self.timeList, "Data values":actualList})
+                dataDF.to_csv(dataDir, header=False, index=False)
 
     def signalStart(self):
         self.signalData = True

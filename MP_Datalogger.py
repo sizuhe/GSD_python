@@ -35,7 +35,8 @@ graphname3_ins = graphName3()
 graphname4_ins = graphName4()
 
 # Data save instance
-datasave_ins = dataSave()
+#? Parameter: number of graphics to be save. If changed, line 386 must also be changed.
+datasave_ins = dataSave(4)
 
 # Serial communication instance
 serialcomm_ins = SerialComm()
@@ -116,7 +117,7 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("V1.0 beta 9\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 11\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -370,21 +371,18 @@ def window():
                 graphname1_ins.update(dataPacket[0])
                 graphname2_ins.update(dataPacket[1])
                 graphname3_ins.update(dataPacket[2])
-                # graphname4_ins.update(dataPacket[3])
+                graphname4_ins.update(dataPacket[3])
                 
                 # Data saving on file
-                try:
-                    datasave_ins.Save(saveTime, dataPacket[0])
-                except:
-                    print("Error 021 - Guardado de datos")
+                #? Change if parameter on line 48 was changed.
+                datasave_ins.Save(saveTime, dataPacket[0], dataPacket[1], dataPacket[2], dataPacket[3])
 
                 # LCD time updater
                 saveTime += 0.5
                 if ((saveTime*2)%2) == 0:
                     datasave_ins.LCD(Pag1_TimeLCD)
-
         except:
-            print("Error 012 - Actualización de datos")
+            print("Error MP_Datalogger - dataUpdater")
 
 
     # Real time data updater

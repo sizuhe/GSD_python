@@ -5,9 +5,8 @@ import time
 import ctypes
 import sys
 
-# Modules
-from serialComm import SerialComm
-from dataSave import dataSave
+from serialcomm import SerialComm
+from datasave import DataSave
 from graphs.graphName1 import graphName1
 from graphs.graphName2 import graphName2
 from graphs.graphName3 import graphName3
@@ -36,7 +35,7 @@ graphname4_ins = graphName4()
 
 # Data save instance
 #? Parameter: number of graphics to be save. If changed, line 386 must also be changed.
-datasave_ins = dataSave(4)
+datasave_ins = DataSave(4)
 
 # Serial communication instance
 serialcomm_ins = SerialComm()
@@ -117,7 +116,7 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("V1.0 beta 11\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 11.1\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -352,11 +351,11 @@ menuBar_Tab2.addAction(Tab2_Action_HideGraph4)
 
 #* ========================================
 
-# Time elapsed
-counterGraph_time = 0
-saveTime = 0
+if __name__ == "__main__":
+    # Time elapsed
+    counterGraph_time = 0
+    saveTime = 0
 
-def window():
     def dataUpdater():
         global counterGraph_time, saveTime
 
@@ -391,8 +390,3 @@ def window():
 
     mainWindow.show()
     sys.exit(app.exec())
-
-
-
-if __name__ == "__main__":
-    window()

@@ -35,7 +35,7 @@ class SerialComm:
                 packet = packet.split(',')
                 return packet
             except:
-                print("Error serialComm - dataPacket_Read")
+                print("Error serialcomm - dataPacket_Read")
         # Test mode data
         else:
             packet = [random.random(), random.random(), random.random(), random.random()]

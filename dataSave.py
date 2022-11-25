@@ -4,7 +4,7 @@ import os
 
 
 
-class dataSave:
+class DataSave:
     def __init__(self, graphcounter):
         self.graphcounter = graphcounter
         self.signalData = False
@@ -14,7 +14,7 @@ class dataSave:
 
         # Creating folder 'saves'
         filePath = str(os.path.abspath(__file__))
-        filePath = filePath.replace('dataSave.py','saves')
+        filePath = filePath.replace('datasave.py','saves')
 
         if not os.path.exists(filePath):
             os.makedirs(filePath)

@@ -34,8 +34,9 @@ class SerialComm:
                 packet = packet.decode("utf-8")
                 packet = packet.split(',')
                 return packet
-            except:
-                print("Error serialcomm - dataPacket_Read")
+            except Exception as error:
+                print("Error serialcomm - Serial port data reading")
+                print(error)
         # Test mode data
         else:
             packet = [random.random(), random.random(), random.random(), random.random()]

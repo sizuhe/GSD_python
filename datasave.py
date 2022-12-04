@@ -57,7 +57,11 @@ class DataSave:
                 # Saving data to various CSV files
                 actualList = self.dataLists[pos0]
                 dataDF = pd.DataFrame({"Time":self.timeList, "Data values":actualList})
-                dataDF.to_csv(dataDir, header=False, index=False)
+                try:
+                    dataDF.to_csv(dataDir, header=False, index=False)
+                except Exception as error:
+                    print("Error datasave - Save to csv")
+                    print(error)
 
     def signalStart(self):
         self.signalData = True

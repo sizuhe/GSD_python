@@ -108,7 +108,7 @@ Pag1_Light.setTextVisible(False)
 ### Spacer
 Pag1_spacerItem = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Fixed)
 
-###! Authors/credits box
+### Authors/credits box
 Pag1_CreditsBox = QtWidgets.QLabel(groupTabWidget_Pag1)
 Pag1_CreditsBox.setFrameShape(QtWidgets.QFrame.Box)
 Pag1_CreditsBox.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -116,11 +116,13 @@ Pag1_CreditsBox.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
-Pag1_CreditsBox.setText("V1.0 beta 11.1\n\n"
+####################!
+Pag1_CreditsBox.setText("V1.0 beta 11.3\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
 "Universidad de Antioquia")
+####################!
 
 ### Adding widgets to tab widget page 1 - 'Toma de datos'
 gridTabWidget_Pag1.addWidget(Pag1_TestmodeON, 0, 0, 1, 1)
@@ -358,7 +360,6 @@ if __name__ == "__main__":
 
     def dataUpdater():
         global counterGraph_time, saveTime
-
         # Graph updating
         try:
             dataPacket = serialcomm_ins.dataPacket_Read()
@@ -380,8 +381,9 @@ if __name__ == "__main__":
                 saveTime += 0.5
                 if ((saveTime*2)%2) == 0:
                     datasave_ins.LCD(Pag1_TimeLCD)
-        except:
+        except Exception as error:
             print("Error MP_Datalogger - dataUpdater")
+            print(error)
 
 
     # Real time data updater

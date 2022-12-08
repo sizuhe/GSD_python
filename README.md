@@ -4,7 +4,7 @@ GUI created to visualize and save incoming data from sensors connected to an ard
 ![demo](https://i.imgur.com/FzNQVxr.gif)
 
 ## Capabilities
-- Realtime plotting of data every 500 ms.
+- Realtime plotting every 500 ms.
 - Visualization of last 7.5 seconds of data.
 - Data saving for up to 4 graphs at the same time.
 - Test mode with data saving capabilites.
@@ -18,9 +18,9 @@ pip install -r requirements.txt
 
 # How does it work?
 ## Communication
-Software should automatically detect COM port when an Arduino is connected to the computer (**software needs to be restarted**). There's a manual way to select COM port inside `serialComm.py` file. 
+Software should automatically detect COM port when an Arduino is connected to the computer (**software needs to be restarted**). There's a manual way to select COM port inside `serialcomm.py` file. 
 
-If the software doesn't detect an Arduino test mode will start. Test mode status can be seen above `Iniciar` and `Detener` buttons.
+If the software doesn't detect an Arduino, test mode will start. Test mode status can be seen above `Iniciar` and `Detener` buttons.
 
 Incoming Arduino data needs to have a `baudrate` of 9600 and needs to be printed as a string with the following structure.
 ```c++

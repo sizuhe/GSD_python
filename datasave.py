@@ -56,7 +56,8 @@ class DataSave:
 
                 # Saving data to various CSV files
                 actualList = self.dataLists[pos0]
-                dataDF = pd.DataFrame({"Time":self.timeList, "Data values":actualList})
+                dataDF = pd.DataFrame({"Time":self.timeList, 
+                                       "Data values":actualList})
                 try:
                     dataDF.to_csv(dataDir, header=False, index=False)
                 except Exception as error:

@@ -1,21 +1,15 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
-import time
 import ctypes
+import time
 import sys
 
 from serialcomm import SerialComm
 from datasave import DataSave
-from graphs.graphName1 import graphName1
-from graphs.graphName2 import graphName2
-from graphs.graphName3 import graphName3
-from graphs.graphName4 import graphName4
+from graphs import GraphPlot
 
 
-
-#? To be changed:
-# Statustip and titles for graphs
 
 # Create main window
 app = QApplication(sys.argv)
@@ -28,10 +22,10 @@ mainWindow.setWindowIcon(QtGui.QIcon('icons/DeltaV.png'))
 mainWindow.setWindowTitle("Multipurpose Datalogger")
 
 # Instance of each graph
-graphname1_ins = graphName1()
-graphname2_ins = graphName2()
-graphname3_ins = graphName3()
-graphname4_ins = graphName4()
+graph1_ins = GraphPlot()
+graph2_ins = GraphPlot()
+graph3_ins = GraphPlot()
+graph4_ins = GraphPlot()
 
 # Data save instance
 #? Parameter: number of graphics to be save. If changed, line 386 must also be changed.
@@ -117,7 +111,7 @@ Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
 ####################!
-Pag1_CreditsBox.setText("V1.0 beta 11.3\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 12.0\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -247,16 +241,22 @@ graphsView2 = pg.GraphicsView()
 graphsView3 = pg.GraphicsView()
 graphsView4 = pg.GraphicsView()
 
-graphsView1.setCentralItem(graphname1_ins)
-graphsView2.setCentralItem(graphname2_ins)
-graphsView3.setCentralItem(graphname3_ins)
-graphsView4.setCentralItem(graphname4_ins)
+graphsView1.setCentralItem(graph1_ins)
+graphsView2.setCentralItem(graph2_ins)
+graphsView3.setCentralItem(graph3_ins)
+graphsView4.setCentralItem(graph4_ins)
 
+#? Graphs name and description
+graph1_ins.title('Titulo 1')
+graph2_ins.title('Titulo 2')
+graph3_ins.title('Titulo 3')
+graph4_ins.title('Titulo 4')
 graphsView1.setStatusTip("Descripción gráfica 1")
 graphsView2.setStatusTip("Descripción gráfica 2")
 graphsView3.setStatusTip("Descripción gráfica 3")
 graphsView4.setStatusTip("Descripción gráfica 4")
 
+# Graphs position
 gridGraphs.addWidget(graphsView1, 0, 1, 1, 1)
 gridGraphs.addWidget(graphsView2, 0, 2, 1, 1)
 gridGraphs.addWidget(graphsView3, 1, 1, 1, 1)
@@ -368,14 +368,18 @@ if __name__ == "__main__":
             if (time.monotonic() - counterGraph_time) >= 0.5:
                 counterGraph_time = time.monotonic()
 
-                graphname1_ins.update(dataPacket[0])
-                graphname2_ins.update(dataPacket[1])
-                graphname3_ins.update(dataPacket[2])
-                graphname4_ins.update(dataPacket[3])
+                graph1_ins.update(dataPacket[0])
+                graph2_ins.update(dataPacket[1])
+                graph3_ins.update(dataPacket[2])
+                graph4_ins.update(dataPacket[3])
                 
                 # Data saving on file
                 #? Change if parameter on line 48 was changed.
-                datasave_ins.Save(saveTime, dataPacket[0], dataPacket[1], dataPacket[2], dataPacket[3])
+                datasave_ins.Save(saveTime,
+                                  dataPacket[0],
+                                  dataPacket[1],
+                                  dataPacket[2],
+                                  dataPacket[3])
 
                 # LCD time updater
                 saveTime += 0.5
@@ -384,7 +388,6 @@ if __name__ == "__main__":
         except Exception as error:
             print("Error MP_Datalogger - dataUpdater")
             print(error)
-
 
     # Real time data updater
     dataUpdate = pg.QtCore.QTimer(timeout = dataUpdater)

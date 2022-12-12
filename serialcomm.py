@@ -39,7 +39,10 @@ class SerialComm:
                 print(error)
         # Test mode data
         else:
-            packet = [random.random(), random.random(), random.random(), random.random()]
+            packet = [random.random(),
+                      random.random(),
+                      random.random(),
+                      random.random()]
             return packet
 
     def testStatus(self):

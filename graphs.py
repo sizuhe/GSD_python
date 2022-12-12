@@ -3,13 +3,12 @@ import numpy as np
 
 
 
-class graphName4(pg.PlotItem):
+class GraphPlot(pg.PlotItem):
     def __init__(self):
         super().__init__()
         # Zero values to replace with real data
         self.hideAxis("bottom")
         self.setLabel("left"," ")
-        self.setTitle("Titulo")
         self.setMenuEnabled(False)
         self.getViewBox().setLimits(xMin=0, xMax=14)
         self.plotGraph = self.plot()
@@ -20,3 +19,6 @@ class graphName4(pg.PlotItem):
         self.dataGraph[:-1] = self.dataGraph[1:]
         self.dataGraph[-1] = float(data)
         self.plotGraph.setData(self.dataGraph)
+        
+    def title(self, title):
+        self.setTitle(title)

@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import QtCore, QtWidgets, QtGui
 import pyqtgraph as pg
-import ctypes
 import time
+import ctypes
 import sys
 
 from serialcomm import SerialComm
@@ -36,7 +36,7 @@ serialcomm_ins = SerialComm()
 
 
 
-# * ===== User Interface =====
+#* ===== User Interface =====
 
 # Main interface objects
 Interface = QtWidgets.QWidget()
@@ -57,6 +57,10 @@ gridTabWidget_Pag1 = QtWidgets.QGridLayout(groupTabWidget_Pag1)
 groupTabWidget.addTab(groupTabWidget_Pag1, "Toma de datos")
 groupTabWidget.setStatusTip("Menu para iniciar/detener toma de datos")
 
+#### BoldText
+boldText = QtGui.QFont()
+boldText.setBold(True)
+
 ### Test mode status
 Pag1_TestmodeON = QtWidgets.QLabel(groupTabWidget_Pag1)
 Pag1_TestmodeON.setFrameShape(QtWidgets.QFrame.Box)
@@ -68,8 +72,17 @@ Pag1_TestmodeOFF.setFrameShape(QtWidgets.QFrame.Box)
 Pag1_TestmodeOFF.setFrameShadow(QtWidgets.QFrame.Sunken)
 Pag1_TestmodeOFF.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_TestmodeOFF.setText("Testmode OFF")
-testMode_Boldtext = QtGui.QFont()
-testMode_Boldtext.setBold(True)
+
+### Connected port details
+Pag1_ArduinoText = QtWidgets.QLabel(groupTabWidget_Pag1)
+Pag1_ArduinoText.setAlignment(QtCore.Qt.AlignRight)
+Pag1_ArduinoText.setText("Descripción")
+Pag1_ArduinoText.setFont(boldText)
+arduinoName = serialcomm_ins.getArduinoName()
+Pag1_ArduinoName = QtWidgets.QLabel(groupTabWidget_Pag1)
+Pag1_ArduinoName.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+Pag1_ArduinoName.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+Pag1_ArduinoName.setText(arduinoName)
 
 # Horizontal line
 Pag1_horizontalLine = QtWidgets.QFrame(groupTabWidget_Pag1)
@@ -111,7 +124,7 @@ Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
 ####################!
-Pag1_CreditsBox.setText("V1.0 beta 12.0\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 12.2\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -121,14 +134,16 @@ Pag1_CreditsBox.setText("V1.0 beta 12.0\n\n"
 ### Adding widgets to tab widget page 1 - 'Toma de datos'
 gridTabWidget_Pag1.addWidget(Pag1_TestmodeON, 0, 0, 1, 1)
 gridTabWidget_Pag1.addWidget(Pag1_TestmodeOFF, 0, 1, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_horizontalLine, 1, 0, 1, 2)
-gridTabWidget_Pag1.addWidget(Pag1_TimeText, 2, 0, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_TimeLCD, 2, 1, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_ButtonStart, 3, 0, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_ButtonStop, 3, 1, 1, 1)
-gridTabWidget_Pag1.addWidget(Pag1_Light, 4, 0, 1, 2)
-gridTabWidget_Pag1.addItem(Pag1_spacerItem, 5, 0, 1, 2)
-gridTabWidget_Pag1.addWidget(Pag1_CreditsBox, 6, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_ArduinoText, 1, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_ArduinoName, 1, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_horizontalLine, 2, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_TimeText, 3, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_TimeLCD, 3, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_ButtonStart, 4, 0, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_ButtonStop, 4, 1, 1, 1)
+gridTabWidget_Pag1.addWidget(Pag1_Light, 5, 0, 1, 2)
+gridTabWidget_Pag1.addItem(Pag1_spacerItem, 6, 0, 1, 2)
+gridTabWidget_Pag1.addWidget(Pag1_CreditsBox, 7, 0, 1, 2)
 
 # Datasave light ON-OFF functions
 def Light_ON():
@@ -137,12 +152,12 @@ def Light_OFF():
     Pag1_Light.setProperty("value", 0)
 
 # Test mode light ON-OFF
-if serialcomm_ins.testStatus() == True:
+if serialcomm_ins.getTestStatus() == True:
     Pag1_TestmodeON.setStyleSheet("background-color: rgb(46,180,87)")
-    Pag1_TestmodeON.setFont(testMode_Boldtext)
+    Pag1_TestmodeON.setFont(boldText)
 else:
     Pag1_TestmodeOFF.setStyleSheet("background-color: rgb(220,40,57)")
-    Pag1_TestmodeOFF.setFont(testMode_Boldtext)
+    Pag1_TestmodeOFF.setFont(boldText)
 
 # Data saving functions
 def dataStop():
@@ -355,19 +370,17 @@ menuBar_Tab2.addAction(Tab2_Action_HideGraph4)
 
 if __name__ == "__main__":
     # Time elapsed
-    counterGraph_time = 0
-    saveTime = 0
-
+    counterGraph_time, saveTime = 0, 0
+    
     def dataUpdater():
         global counterGraph_time, saveTime
         # Graph updating
         try:
             dataPacket = serialcomm_ins.dataPacket_Read()
-
+            
             # Updating every 0.5 s
             if (time.monotonic() - counterGraph_time) >= 0.5:
                 counterGraph_time = time.monotonic()
-
                 graph1_ins.update(dataPacket[0])
                 graph2_ins.update(dataPacket[1])
                 graph3_ins.update(dataPacket[2])
@@ -376,11 +389,11 @@ if __name__ == "__main__":
                 # Data saving on file
                 #? Change if parameter on line 48 was changed.
                 datasave_ins.Save(saveTime,
-                                  dataPacket[0],
-                                  dataPacket[1],
-                                  dataPacket[2],
-                                  dataPacket[3])
-
+                                    dataPacket[0],
+                                    dataPacket[1],
+                                    dataPacket[2],
+                                    dataPacket[3])
+                
                 # LCD time updater
                 saveTime += 0.5
                 if ((saveTime*2)%2) == 0:
@@ -388,10 +401,11 @@ if __name__ == "__main__":
         except Exception as error:
             print("Error MP_Datalogger - dataUpdater")
             print(error)
-
+    
     # Real time data updater
     dataUpdate = pg.QtCore.QTimer(timeout = dataUpdater)
     dataUpdate.start(0)
-
+    
     mainWindow.show()
     sys.exit(app.exec())
+    

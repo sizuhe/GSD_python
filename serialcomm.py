@@ -8,6 +8,7 @@ class SerialComm:
         self.serialInst = serial.Serial()
         self.serialInst.baudrate = 9600
         self.testSignal = False
+        self.arduinoName = 'Testmode'
         arduinoSignal = False
 
         # Automatic arduino detection and test mode
@@ -16,6 +17,7 @@ class SerialComm:
                 if ('CH340' or 'Arduino') in port.description:
                     arduinoSignal = True
                     self.serialInst.port = port.name
+                    self.arduinoName = port.description
                     self.serialInst.open()
                 elif arduinoSignal == False:
                     self.testSignal = True
@@ -45,5 +47,8 @@ class SerialComm:
                       random.random()]
             return packet
 
-    def testStatus(self):
+    def getTestStatus(self):
         return self.testSignal
+    
+    def getArduinoName(self):
+        return self.arduinoName

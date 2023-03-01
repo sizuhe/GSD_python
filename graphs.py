@@ -12,7 +12,7 @@ class GraphPlot(pg.PlotItem):
         self.setMenuEnabled(False)
         self.getViewBox().setLimits(xMin=0, xMax=14)
         self.plotGraph = self.plot()
-        self.plotGraph.setPen(255,72,0)
+        self.plotGraph.setPen(255, 72, 0)
         self.dataGraph = np.linspace(0, 0, 15)
 
     def update(self, data):

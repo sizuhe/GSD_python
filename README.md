@@ -8,6 +8,7 @@ GUI created to visualize and save incoming data from sensors connected to an ard
 - Visualization of last 7.5 seconds of data.
 - Data saving for up to 4 graphs at the same time.
 - Test mode with data saving capabilites.
+- Automatic Arduino detection.
 
 
 # How to install
@@ -26,7 +27,7 @@ Incoming Arduino data needs to have a `baudrate` of 9600 and needs to be printed
 ```c++
 data1,data2,data3,data4
 ```
-Data plotting is made every 500 ms on the `MP_Datalogger.py` file so incoming serial data doesn't need any timer for printing data.
+Data plotting is made every 500 ms on the `main.py` file so incoming serial data doesn't need any timer for printing data.
 
 ## Data saving
 To begin data saving just click the `Iniciar` button, you can see elapsed time on the timer above the buttons, to stop data saving click `Detener`. 

@@ -9,23 +9,23 @@ class SerialComm:
         self.serialInst.baudrate = 9600
         self.testSignal = False
         self.arduinoName = 'Testmode'
-        arduinoSignal = False
+        arduinoList = ['Arduino', 'CH340']
 
         # Automatic arduino detection and test mode
         if len(serial.tools.list_ports.comports()) != 0:
             for port in serial.tools.list_ports.comports():
-                if ('CH340' or 'Arduino') in port.description:
-                    arduinoSignal = True
-                    self.serialInst.port = port.name
-                    self.arduinoName = port.description
-                    self.serialInst.open()
-                elif arduinoSignal == False:
-                    self.testSignal = True
+                for arduino in arduinoList:
+                    if port.description.find(arduino) != -1:
+                        self.serialInst.port = port.name
+                        self.arduinoName = port.description
+                        self.serialInst.open()
+                    else:
+                        self.testSignal = True
         else:
             self.testSignal = True
 
         # Manual mode
-        # self.serialInst.port = "COM4"       
+        # self.serialInst.port = "COM4"
         # self.serialInst.open()
 
     def dataPacket_Read(self):
@@ -42,6 +42,10 @@ class SerialComm:
         # Test mode data
         else:
             packet = [random.random(),
+                      random.random(),
+                      random.random(),
+                      random.random(),
+                      random.random(),
                       random.random(),
                       random.random(),
                       random.random()]

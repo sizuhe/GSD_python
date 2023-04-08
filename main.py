@@ -26,10 +26,14 @@ graph1_ins = GraphPlot()
 graph2_ins = GraphPlot()
 graph3_ins = GraphPlot()
 graph4_ins = GraphPlot()
+graph5_ins = GraphPlot()
+graph6_ins = GraphPlot()
+graph7_ins = GraphPlot()
+graph8_ins = GraphPlot()
 
 # Data save instance
 #? Parameter: number of graphics to be save. If changed, line 386 must also be changed.
-datasave_ins = DataSave(4)
+datasave_ins = DataSave(8)
 
 # Serial communication instance
 serialcomm_ins = SerialComm()
@@ -124,7 +128,7 @@ Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
 ####################!
-Pag1_CreditsBox.setText("V1.0 beta 12.2\n\n"
+Pag1_CreditsBox.setText("V1.0 beta 13\n\n"
 "Desarrollado por\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
 "Semillero de investigación - Delta V\n"
@@ -169,83 +173,6 @@ Pag1_ButtonStart.clicked.connect(datasave_ins.signalStart)
 Pag1_ButtonStop.clicked.connect(Light_OFF)
 Pag1_ButtonStop.clicked.connect(dataStop)
 
-# --------------------
-## PAGE 2 - 'Detalles'
-groupTabWidget_Pag2 = QtWidgets.QWidget()
-groupTabWidget_Pag2.setEnabled(False)       #! ----- TO DO -----
-gridTabWidget_Pag2 = QtWidgets.QGridLayout(groupTabWidget_Pag2)
-groupTabWidget.addTab(groupTabWidget_Pag2, "Detalles")
-groupTabWidget.setStatusTip("Detalles de la prueba")
-
-Pag2_NameText = QtWidgets.QLabel(groupTabWidget_Pag2)
-Pag2_NameText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag2_NameText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_NameText.setText("Nombre")
-Pag2_ManufacturerText = QtWidgets.QLabel(groupTabWidget_Pag2)
-Pag2_ManufacturerText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag2_ManufacturerText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_ManufacturerText.setText("Proveedor")
-Pag2_DateText = QtWidgets.QLabel(groupTabWidget_Pag2)
-Pag2_DateText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag2_DateText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_DateText.setText("Fecha [DD/MM/AAAA]")
-Pag2_DiameterText = QtWidgets.QLabel(groupTabWidget_Pag2)
-Pag2_DiameterText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag2_DiameterText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_DiameterText.setText("Diámetro [mm]")
-Pag2_HeightText = QtWidgets.QLabel(groupTabWidget_Pag2)
-Pag2_HeightText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag2_HeightText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_HeightText.setText("Altura [mm]")
-Pag2_PropweightText = QtWidgets.QLabel(groupTabWidget_Pag2)
-Pag2_PropweightText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag2_PropweightText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_PropweightText.setText("Peso del propelente [g]")
-Pag2_MotorweightText = QtWidgets.QLabel(groupTabWidget_Pag2)
-Pag2_MotorweightText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-Pag2_MotorweightText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag2_MotorweightText.setText("Peso del motor [g]")
-
-### User entry text
-Pag2_NameText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_NameText_edit.setStatusTip("Nombre del motor")
-Pag2_ManufacturerText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_ManufacturerText_edit.setStatusTip("Proveedor del motor")
-Pag2_DateText_edit = QtWidgets.QDateEdit(groupTabWidget_Pag2)
-Pag2_DateText_edit.setStatusTip("Fecha de la prueba")
-Pag2_DiameterText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_DiameterText_edit.setStatusTip("Diámetro del motor")
-Pag2_HeightText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_HeightText_edit.setStatusTip("Altura del motor")
-Pag2_PropweightText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_PropweightText_edit.setStatusTip("Peso del propelente del motor (PesoMotor_Lleno - PesoMotor_Vacío)")
-Pag2_MotorweightText_edit = QtWidgets.QLineEdit(groupTabWidget_Pag2)
-Pag2_MotorweightText_edit.setStatusTip("Peso del motor con propelente")
-
-Pag2_NameText_edit.setMaxLength(5)
-Pag2_ManufacturerText_edit.setMaxLength(10)
-Pag2_DiameterText_edit.setMaxLength(5)
-Pag2_HeightText_edit.setMaxLength(5)
-Pag2_PropweightText_edit.setMaxLength(5)
-Pag2_MotorweightText_edit.setMaxLength(5)
-
-### Adding widgets to tab widget page 2 - 'Detalles'
-gridTabWidget_Pag2.addWidget(Pag2_NameText, 0, 0, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_ManufacturerText, 1, 0, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_DateText, 2, 0, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_DiameterText, 3, 0, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_HeightText, 4, 0, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_PropweightText, 5, 0, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_MotorweightText, 6, 0, 1, 1)
-
-gridTabWidget_Pag2.addWidget(Pag2_NameText_edit, 0, 1, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_ManufacturerText_edit, 1, 1, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_DateText_edit, 2, 1, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_DiameterText_edit, 3, 1, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_HeightText_edit, 4, 1, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_PropweightText_edit, 5, 1, 1, 1)
-gridTabWidget_Pag2.addWidget(Pag2_MotorweightText_edit, 6, 1, 1, 1)
-
 #* ----------------------------------------
 
 # GRAPHS
@@ -255,27 +182,47 @@ graphsView1 = pg.GraphicsView()
 graphsView2 = pg.GraphicsView()
 graphsView3 = pg.GraphicsView()
 graphsView4 = pg.GraphicsView()
+graphsView5 = pg.GraphicsView()
+graphsView6 = pg.GraphicsView()
+graphsView7 = pg.GraphicsView()
+graphsView8 = pg.GraphicsView()
 
 graphsView1.setCentralItem(graph1_ins)
 graphsView2.setCentralItem(graph2_ins)
 graphsView3.setCentralItem(graph3_ins)
 graphsView4.setCentralItem(graph4_ins)
+graphsView5.setCentralItem(graph5_ins)
+graphsView6.setCentralItem(graph6_ins)
+graphsView7.setCentralItem(graph7_ins)
+graphsView8.setCentralItem(graph8_ins)
 
 #? Graphs name and description
-graph1_ins.title('Titulo 1')
-graph2_ins.title('Titulo 2')
-graph3_ins.title('Titulo 3')
-graph4_ins.title('Titulo 4')
-graphsView1.setStatusTip("Descripción gráfica 1")
-graphsView2.setStatusTip("Descripción gráfica 2")
-graphsView3.setStatusTip("Descripción gráfica 3")
-graphsView4.setStatusTip("Descripción gráfica 4")
+graph1_ins.title('Humedad [%]')
+graph2_ins.title('Temperatura [ºC]')
+graph3_ins.title('Presión [hPa]')
+graph4_ins.title('Altitud [m]')
+graph5_ins.title('Aceleración vertical [g]')
+graph6_ins.title('Campo magnético [uT]')
+graph7_ins.title('Otra gráfica 1')
+graph8_ins.title('Otra gráfica 2')
+graphsView1.setStatusTip("Gráfica de humedad")
+graphsView2.setStatusTip("Gráfica de temperatura")
+graphsView3.setStatusTip("Gráfica de presión")
+graphsView4.setStatusTip("Gráfica de altitud")
+graphsView5.setStatusTip("Gráfica de aceleración vertical")
+graphsView6.setStatusTip("Gráfica de campo magnético")
+graphsView7.setStatusTip("Otra gráfica 1")
+graphsView8.setStatusTip("Otra gráfica 2")
 
 # Graphs position
 gridGraphs.addWidget(graphsView1, 0, 1, 1, 1)
-gridGraphs.addWidget(graphsView2, 0, 2, 1, 1)
-gridGraphs.addWidget(graphsView3, 1, 1, 1, 1)
-gridGraphs.addWidget(graphsView4, 1, 2, 1, 1)
+gridGraphs.addWidget(graphsView2, 1, 1, 1, 1)
+gridGraphs.addWidget(graphsView3, 2, 1, 1, 1)
+gridGraphs.addWidget(graphsView4, 3, 1, 1, 1)
+gridGraphs.addWidget(graphsView5, 0, 2, 1, 1)
+gridGraphs.addWidget(graphsView6, 1, 2, 1, 1)
+gridGraphs.addWidget(graphsView7, 2, 2, 1, 1)
+gridGraphs.addWidget(graphsView8, 3, 2, 1, 1)
 
 gridInterface.addLayout(gridGraphs, 0,1,1,1)
 
@@ -333,23 +280,43 @@ Tab2_Action_HideTabWidget.setShortcut("Ctrl+D")
 Tab2_Action_HideGraph1 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph1.setCheckable(True)
 Tab2_Action_HideGraph1.setChecked(True)
-Tab2_Action_HideGraph1.setText("Gráfica 1")
+Tab2_Action_HideGraph1.setText("Gráfica de humedad")
 Tab2_Action_HideGraph1.setShortcut("Ctrl+1")
 Tab2_Action_HideGraph2 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph2.setCheckable(True)
 Tab2_Action_HideGraph2.setChecked(True)
-Tab2_Action_HideGraph2.setText("Gráfica 2")
+Tab2_Action_HideGraph2.setText("Gráfica de temperatura")
 Tab2_Action_HideGraph2.setShortcut("Ctrl+2")
 Tab2_Action_HideGraph3 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph3.setCheckable(True)
 Tab2_Action_HideGraph3.setChecked(True)
-Tab2_Action_HideGraph3.setText("Gráfica 3")
+Tab2_Action_HideGraph3.setText("Gráfica de presión")
 Tab2_Action_HideGraph3.setShortcut("Ctrl+3")
 Tab2_Action_HideGraph4 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph4.setCheckable(True)
 Tab2_Action_HideGraph4.setChecked(True)
-Tab2_Action_HideGraph4.setText("Gráfica 4")
+Tab2_Action_HideGraph4.setText("Gráfica de altitud")
 Tab2_Action_HideGraph4.setShortcut("Ctrl+4")
+Tab2_Action_HideGraph5 = QtWidgets.QAction(mainWindow)
+Tab2_Action_HideGraph5.setCheckable(True)
+Tab2_Action_HideGraph5.setChecked(True)
+Tab2_Action_HideGraph5.setText("Gráfica de aceleración")
+Tab2_Action_HideGraph5.setShortcut("Ctrl+5")
+Tab2_Action_HideGraph6 = QtWidgets.QAction(mainWindow)
+Tab2_Action_HideGraph6.setCheckable(True)
+Tab2_Action_HideGraph6.setChecked(True)
+Tab2_Action_HideGraph6.setText("Gráfica de campo")
+Tab2_Action_HideGraph6.setShortcut("Ctrl+6")
+Tab2_Action_HideGraph7 = QtWidgets.QAction(mainWindow)
+Tab2_Action_HideGraph7.setCheckable(True)
+Tab2_Action_HideGraph7.setChecked(True)
+Tab2_Action_HideGraph7.setText("Otra gráfica 1")
+Tab2_Action_HideGraph7.setShortcut("Ctrl+7")
+Tab2_Action_HideGraph8 = QtWidgets.QAction(mainWindow)
+Tab2_Action_HideGraph8.setCheckable(True)
+Tab2_Action_HideGraph8.setChecked(True)
+Tab2_Action_HideGraph8.setText("Otra gráfica 2")
+Tab2_Action_HideGraph8.setShortcut("Ctrl+8")
 
 ### Actions connections
 Tab2_Action_HideTabWidget.triggered.connect(groupTabWidget.setVisible)
@@ -357,6 +324,10 @@ Tab2_Action_HideGraph1.triggered.connect(graphsView1.setVisible)
 Tab2_Action_HideGraph2.triggered.connect(graphsView2.setVisible)
 Tab2_Action_HideGraph3.triggered.connect(graphsView3.setVisible)
 Tab2_Action_HideGraph4.triggered.connect(graphsView4.setVisible)
+Tab2_Action_HideGraph5.triggered.connect(graphsView5.setVisible)
+Tab2_Action_HideGraph6.triggered.connect(graphsView6.setVisible)
+Tab2_Action_HideGraph7.triggered.connect(graphsView7.setVisible)
+Tab2_Action_HideGraph8.triggered.connect(graphsView8.setVisible)
 
 ### Adding actions to menuBar
 menuBar_Tab2.addAction(Tab2_Action_HideTabWidget)
@@ -365,6 +336,10 @@ menuBar_Tab2.addAction(Tab2_Action_HideGraph1)
 menuBar_Tab2.addAction(Tab2_Action_HideGraph2)
 menuBar_Tab2.addAction(Tab2_Action_HideGraph3)
 menuBar_Tab2.addAction(Tab2_Action_HideGraph4)
+menuBar_Tab2.addAction(Tab2_Action_HideGraph5)
+menuBar_Tab2.addAction(Tab2_Action_HideGraph6)
+menuBar_Tab2.addAction(Tab2_Action_HideGraph7)
+menuBar_Tab2.addAction(Tab2_Action_HideGraph8)
 
 #* ========================================
 
@@ -385,6 +360,10 @@ if __name__ == "__main__":
                 graph2_ins.update(dataPacket[1])
                 graph3_ins.update(dataPacket[2])
                 graph4_ins.update(dataPacket[3])
+                graph5_ins.update(dataPacket[4])
+                graph6_ins.update(dataPacket[5])
+                graph7_ins.update(dataPacket[6])
+                graph8_ins.update(dataPacket[7])
                 
                 # Data saving on file
                 #? Change if parameter on line 48 was changed.
@@ -392,14 +371,18 @@ if __name__ == "__main__":
                                     dataPacket[0],
                                     dataPacket[1],
                                     dataPacket[2],
-                                    dataPacket[3])
+                                    dataPacket[3],
+                                    dataPacket[4],
+                                    dataPacket[5],
+                                    dataPacket[6],
+                                    dataPacket[7])
                 
                 # LCD time updater
                 saveTime += 0.5
                 if ((saveTime*2)%2) == 0:
                     datasave_ins.LCD(Pag1_TimeLCD)
         except Exception as error:
-            print("Error MP_Datalogger - dataUpdater")
+            print("Error main - dataUpdater")
             print(error)
     
     # Real time data updater

@@ -55,11 +55,10 @@ groupTabWidget.setMaximumSize(QtCore.QSize(270, 300))
 gridInterface.addWidget(groupTabWidget, 0, 0, 1, 1, QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
 
 # --------------------
-## PAGE 1 - 'Toma de datos'
+## PAGE 1 - 'Data collection'
 groupTabWidget_Pag1 = QtWidgets.QWidget()
 gridTabWidget_Pag1 = QtWidgets.QGridLayout(groupTabWidget_Pag1)
-groupTabWidget.addTab(groupTabWidget_Pag1, "Toma de datos")
-groupTabWidget.setStatusTip("Menu para iniciar/detener toma de datos")
+groupTabWidget.addTab(groupTabWidget_Pag1, "Data collection")
 
 #### BoldText
 boldText = QtGui.QFont()
@@ -80,7 +79,7 @@ Pag1_TestmodeOFF.setText("Testmode OFF")
 ### Connected port details
 Pag1_ArduinoText = QtWidgets.QLabel(groupTabWidget_Pag1)
 Pag1_ArduinoText.setAlignment(QtCore.Qt.AlignRight)
-Pag1_ArduinoText.setText("Descripción")
+Pag1_ArduinoText.setText("Details")
 Pag1_ArduinoText.setFont(boldText)
 arduinoName = serialcomm_ins.getArduinoName()
 Pag1_ArduinoName = QtWidgets.QLabel(groupTabWidget_Pag1)
@@ -99,7 +98,7 @@ Pag1_TimeText.setFont(QtGui.QFont("default",12))
 Pag1_TimeText.setAlignment(QtCore.Qt.AlignCenter)
 Pag1_TimeText.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_TimeText.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-Pag1_TimeText.setText("Tiempo [s]")
+Pag1_TimeText.setText("Time [s]")
 Pag1_TimeLCD = QtWidgets.QLCDNumber(groupTabWidget_Pag1)
 Pag1_TimeLCD.setFrameShape(QtWidgets.QFrame.NoFrame)
 Pag1_TimeLCD.setSegmentStyle(QtWidgets.QLCDNumber.Flat)
@@ -107,9 +106,9 @@ Pag1_TimeLCD.setProperty("value", 0)
 
 ### Push buttons
 Pag1_ButtonStart = QtWidgets.QPushButton(groupTabWidget_Pag1)
-Pag1_ButtonStart.setText("Iniciar")
+Pag1_ButtonStart.setText("Start")
 Pag1_ButtonStop = QtWidgets.QPushButton(groupTabWidget_Pag1)
-Pag1_ButtonStop.setText("Detener")
+Pag1_ButtonStop.setText("Stop")
 
 ### Light
 Pag1_Light = QtWidgets.QProgressBar(groupTabWidget_Pag1)
@@ -128,14 +127,14 @@ Pag1_CreditsBox.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
 Pag1_CreditsBox.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
 Pag1_CreditsBox.setWordWrap(True)
 ####################!
-Pag1_CreditsBox.setText("V1.0 beta 13\n\n"
-"Desarrollado por\n"
+Pag1_CreditsBox.setText("V1.0 beta 13.1\n\n"
+"Developed by\n"
 "Simón Zuluaga y Mateo Lezama\n\n"
-"Semillero de investigación - Delta V\n"
+"Delta V - Student research group\n"
 "Universidad de Antioquia")
 ####################!
 
-### Adding widgets to tab widget page 1 - 'Toma de datos'
+### Adding widgets to tab widget page 1 - 'Data collection'
 gridTabWidget_Pag1.addWidget(Pag1_TestmodeON, 0, 0, 1, 1)
 gridTabWidget_Pag1.addWidget(Pag1_TestmodeOFF, 0, 1, 1, 1)
 gridTabWidget_Pag1.addWidget(Pag1_ArduinoText, 1, 0, 1, 1)
@@ -197,22 +196,14 @@ graphsView7.setCentralItem(graph7_ins)
 graphsView8.setCentralItem(graph8_ins)
 
 #? Graphs name and description
-graph1_ins.title('Humedad [%]')
-graph2_ins.title('Temperatura [ºC]')
-graph3_ins.title('Presión [hPa]')
-graph4_ins.title('Altitud [m]')
-graph5_ins.title('Aceleración vertical [g]')
-graph6_ins.title('Campo magnético [uT]')
-graph7_ins.title('Otra gráfica 1')
-graph8_ins.title('Otra gráfica 2')
-graphsView1.setStatusTip("Gráfica de humedad")
-graphsView2.setStatusTip("Gráfica de temperatura")
-graphsView3.setStatusTip("Gráfica de presión")
-graphsView4.setStatusTip("Gráfica de altitud")
-graphsView5.setStatusTip("Gráfica de aceleración vertical")
-graphsView6.setStatusTip("Gráfica de campo magnético")
-graphsView7.setStatusTip("Otra gráfica 1")
-graphsView8.setStatusTip("Otra gráfica 2")
+graph1_ins.title('Humidity [%]')
+graph2_ins.title('Temperature [ºC]')
+graph3_ins.title('Pressure [hPa]')
+graph4_ins.title('Altitude [m]')
+graph5_ins.title('Vertical acceleration [g]')
+graph6_ins.title('Magnetic field [uT]')
+graph7_ins.title('Other graph 1')
+graph8_ins.title('Other graph 2')
 
 # Graphs position
 gridGraphs.addWidget(graphsView1, 0, 1, 1, 1)
@@ -237,85 +228,74 @@ mainWindow.setStatusBar(statusBar)
 
 ## Menu bar submenus
 menuBar_Tab1 = QtWidgets.QMenu(menuBar)
-menuBar_Tab1.setTitle("Archivo")
+menuBar_Tab1.setTitle("File")
 menuBar_Tab2 = QtWidgets.QMenu(menuBar)
-menuBar_Tab2.setTitle("Ver")
+menuBar_Tab2.setTitle("View")
 
-## Adding 'Archivo' and 'Ver' submenus to menuBar
+## Adding 'File' and 'View' submenus to menuBar
 menuBar.addAction(menuBar_Tab1.menuAction())
 menuBar.addAction(menuBar_Tab2.menuAction())
 
 # --------------------
-## Submenu - 'Archivo'
-### Submenus
-Tab1_Export = QtWidgets.QMenu(menuBar_Tab1)
-Tab1_Export.setTitle("Exportar")
-
+## Submenu - 'File'
 ### Submenus actions
-Tab1_Action_Ports = QtWidgets.QAction(mainWindow)
-Tab1_Action_OpenRocket = QtWidgets.QAction(mainWindow)
-Tab1_Action_OpenRocket.setText("OpenRocket")
 Tab1_Action_Close = QtWidgets.QAction(mainWindow)
-Tab1_Action_Close.setText("Salir")
+Tab1_Action_Close.setText("Exit")
 
 ### Actions connections
 Tab1_Action_Close.triggered.connect(mainWindow.close)
 
 ### Adding actions to menuBar
 menuBar_Tab1.addSeparator()
-menuBar_Tab1.addAction(Tab1_Export.menuAction())
-Tab1_Export.setEnabled(False)     #! ----- TO DO -----
-Tab1_Export.addAction(Tab1_Action_OpenRocket)
-menuBar_Tab1.addSeparator()
 menuBar_Tab1.addAction(Tab1_Action_Close)
 
 # --------------------
-## Submenu - 'Ver'
+## Submenu - 'View'
 ### Actions
 Tab2_Action_HideTabWidget = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideTabWidget.setCheckable(True)
 Tab2_Action_HideTabWidget.setChecked(True)
-Tab2_Action_HideTabWidget.setText("Detalles del informe")
+Tab2_Action_HideTabWidget.setText("Data collection details")
 Tab2_Action_HideTabWidget.setShortcut("Ctrl+D")
 Tab2_Action_HideGraph1 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph1.setCheckable(True)
 Tab2_Action_HideGraph1.setChecked(True)
-Tab2_Action_HideGraph1.setText("Gráfica de humedad")
+Tab2_Action_HideGraph1.setText("Humidity graph")
 Tab2_Action_HideGraph1.setShortcut("Ctrl+1")
 Tab2_Action_HideGraph2 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph2.setCheckable(True)
 Tab2_Action_HideGraph2.setChecked(True)
-Tab2_Action_HideGraph2.setText("Gráfica de temperatura")
+Tab2_Action_HideGraph2.setText("Temperature graph")
 Tab2_Action_HideGraph2.setShortcut("Ctrl+2")
 Tab2_Action_HideGraph3 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph3.setCheckable(True)
 Tab2_Action_HideGraph3.setChecked(True)
-Tab2_Action_HideGraph3.setText("Gráfica de presión")
+Tab2_Action_HideGraph3.setText("Pressure graph")
 Tab2_Action_HideGraph3.setShortcut("Ctrl+3")
 Tab2_Action_HideGraph4 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph4.setCheckable(True)
 Tab2_Action_HideGraph4.setChecked(True)
-Tab2_Action_HideGraph4.setText("Gráfica de altitud")
+Tab2_Action_HideGraph4.setText("Altitude graph")
 Tab2_Action_HideGraph4.setShortcut("Ctrl+4")
 Tab2_Action_HideGraph5 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph5.setCheckable(True)
 Tab2_Action_HideGraph5.setChecked(True)
-Tab2_Action_HideGraph5.setText("Gráfica de aceleración")
+Tab2_Action_HideGraph5.setText("Vertical accel graph")
 Tab2_Action_HideGraph5.setShortcut("Ctrl+5")
 Tab2_Action_HideGraph6 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph6.setCheckable(True)
 Tab2_Action_HideGraph6.setChecked(True)
-Tab2_Action_HideGraph6.setText("Gráfica de campo")
+Tab2_Action_HideGraph6.setText("Magnetic field graph")
 Tab2_Action_HideGraph6.setShortcut("Ctrl+6")
 Tab2_Action_HideGraph7 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph7.setCheckable(True)
 Tab2_Action_HideGraph7.setChecked(True)
-Tab2_Action_HideGraph7.setText("Otra gráfica 1")
+Tab2_Action_HideGraph7.setText("Other graph 1")
 Tab2_Action_HideGraph7.setShortcut("Ctrl+7")
 Tab2_Action_HideGraph8 = QtWidgets.QAction(mainWindow)
 Tab2_Action_HideGraph8.setCheckable(True)
 Tab2_Action_HideGraph8.setChecked(True)
-Tab2_Action_HideGraph8.setText("Otra gráfica 2")
+Tab2_Action_HideGraph8.setText("Other graph 2")
 Tab2_Action_HideGraph8.setShortcut("Ctrl+8")
 
 ### Actions connections

@@ -19,8 +19,10 @@ class SerialComm:
                         self.serialInst.port = port.name
                         self.arduinoName = port.description
                         self.serialInst.open()
+                        break
                     else:
                         self.testSignal = True
+                break
         else:
             self.testSignal = True
 

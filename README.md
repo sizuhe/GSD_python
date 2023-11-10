@@ -1,4 +1,4 @@
-# Multipurpose GUI / Datalogger
+# GSD (Ground Station Datalogger)
 GUI created to visualize and save incoming data from sensors connected to an arduino using serial communication.
 
 ![demo](https://i.imgur.com/FzNQVxr.gif)
